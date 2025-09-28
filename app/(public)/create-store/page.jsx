@@ -4,8 +4,15 @@ import { useEffect, useState } from "react"
 import Image from "next/image"
 import toast from "react-hot-toast"
 import Loading from "@/components/Loading"
+import { useAuth, useUser } from "@clerk/nextjs"
+import { useRouter } from "next/navigation"
+import axios from "axios"
 
 export default function CreateStore() {
+
+    const { user } = useUser()
+    const router = useRouter()
+    const { getToken } = useAuth()
 
     const [alreadySubmitted, setAlreadySubmitted] = useState(false)
     const [status, setStatus] = useState("")
@@ -27,22 +34,87 @@ export default function CreateStore() {
     }
 
     const fetchSellerStatus = async () => {
-        // Logic to check if the store is already submitted
-
-
-        setLoading(false)
+        try {
+            // pastikan token di-await
+            const token = await getToken()
+            if (!token) {
+                setLoading(false)
+                return
+            }
+            const { data } = await axios.get('/api/store/create', {
+                headers: { Authorization: `Bearer ${token}` }
+            })
+            // data: { status: "not registered" } atau status store
+            if (data?.status && data.status !== "not registered") {
+                setAlreadySubmitted(true)
+                setStatus(data.status)
+                setMessage(`Your store registration is ${data.status}`)
+            } else {
+                setAlreadySubmitted(false)
+            }
+        } catch (err) {
+            console.error('fetchSellerStatus error', err)
+            // jika unauthorized, treat as not registered
+            setAlreadySubmitted(false)
+        } finally {
+            setLoading(false)
+        }
     }
 
     const onSubmitHandler = async (e) => {
         e.preventDefault()
-        // Logic to submit the store details
+        if (!user) {
+            return toast('please login to continue')
+        }
+        try {
+            // **IMPORTANT**: await token
+            const token = await getToken()
+            if (!token) {
+                return toast.error('authentication failed, please login again')
+            }
 
+            const formData = new FormData()
+            formData.append("name", storeInfo.name)
+            formData.append("description", storeInfo.description)
+            formData.append("username", storeInfo.username)
+            formData.append("email", storeInfo.email)
+            formData.append("contact", storeInfo.contact)
+            formData.append("address", storeInfo.address)
+            formData.append("image", storeInfo.image)
 
+            const { data } = await axios.post('/api/store/create', formData, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    // jangan set content-type manual kalau pakai FormData; axios atur boundary otomatis
+                }
+            })
+            toast.success(data.message)
+            // setelah submit, refresh status
+            await fetchSellerStatus()
+        } catch (error) {
+            console.error(error)
+            toast.error(error?.response?.data?.error || error.message)
+        }
     }
 
     useEffect(() => {
-        fetchSellerStatus()
-    }, [])
+        // jalankan cek hanya jika user sudah tersedia
+        if (user) {
+            fetchSellerStatus()
+        } else {
+            // jika belum login, hentikan loading
+            setLoading(false)
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [user])
+
+    if (!user) {
+        return (
+            <div>
+                <h1 className="text-2xl sm:text-4xl font-semibold">Please <span className="text-slate-500">Login</span> to Continue</h1>
+            </div>
+        )
+    }
 
     return !loading ? (
         <>

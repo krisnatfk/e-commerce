@@ -2,29 +2,70 @@
 import { storesDummyData } from "@/assets/assets"
 import StoreInfo from "@/components/admin/StoreInfo"
 import Loading from "@/components/Loading"
+import { useAuth, useUser } from "@clerk/nextjs"
+import axios from "axios"
 import { useEffect, useState } from "react"
 import toast from "react-hot-toast"
+import { useRouter } from "next/navigation"
 
 export default function AdminApprove() {
-
+    const { user } = useUser()
+    const { getToken } = useAuth()
+    const router = useRouter()
     const [stores, setStores] = useState([])
     const [loading, setLoading] = useState(true)
 
-
     const fetchStores = async () => {
-        setStores(storesDummyData)
-        setLoading(false)
+        setLoading(true)
+        try {
+            const token = await getToken()
+            if (!token) throw new Error('authentication failed')
+
+            // **IMPORTANT**: await axios.get
+            const { data } = await axios.get('/api/admin/approve-store', {
+                headers: { Authorization: `Bearer ${token}` }
+            })
+
+            // safe set: jika server kirim error, data mungkin undefined
+            setStores(data?.stores ?? [])
+        } catch (error) {
+            console.error('fetchStores error:', error)
+            toast.error(error?.response?.data?.error || error.message || 'Failed to fetch stores')
+            setStores([])
+        } finally {
+            setLoading(false)
+        }
     }
 
     const handleApprove = async ({ storeId, status }) => {
-        // Logic to approve a store
+        // harus mengembalikan Promise supaya toast.promise bisa bekerja
+        try {
+            const token = await getToken()
+            if (!token) throw new Error('authentication failed')
 
+            const res = await axios.put('/api/admin/approve-store', { storeId, status }, {
+                headers: { Authorization: `Bearer ${token}` }
+            })
 
+            // refresh data after success
+            await fetchStores()
+            return res
+        } catch (err) {
+            console.error('handleApprove error:', err)
+            // rethrow supaya toast.promise menangkapnya
+            throw err
+        }
     }
 
     useEffect(() => {
+        if (user) {
             fetchStores()
-    }, [])
+        } else {
+            // jika belum login, hentikan loading supaya UI tidak stuck
+            setLoading(false)
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [user])
 
     return !loading ? (
         <div className="text-slate-500 mb-28">
@@ -39,10 +80,31 @@ export default function AdminApprove() {
 
                             {/* Actions */}
                             <div className="flex gap-3 pt-2 flex-wrap">
-                                <button onClick={() => toast.promise(handleApprove({ storeId: store.id, status: 'approved' }), { loading: "approving" })} className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 text-sm" >
+                                <button
+                                    onClick={() => toast.promise(
+                                        handleApprove({ storeId: store.id, status: 'approved' }),
+                                        {
+                                            loading: 'Approving store...',
+                                            success: 'Store approved',
+                                            error: 'Failed to approve'
+                                        }
+                                    )}
+                                    className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 text-sm"
+                                >
                                     Approve
                                 </button>
-                                <button onClick={() => toast.promise(handleApprove({ storeId: store.id, status: 'rejected' }), { loading: 'rejecting' })} className="px-4 py-2 bg-slate-500 text-white rounded hover:bg-slate-600 text-sm" >
+
+                                <button
+                                    onClick={() => toast.promise(
+                                        handleApprove({ storeId: store.id, status: 'rejected' }),
+                                        {
+                                            loading: 'Rejecting store...',
+                                            success: 'Store rejected',
+                                            error: 'Failed to reject'
+                                        }
+                                    )}
+                                    className="px-4 py-2 bg-slate-500 text-white rounded hover:bg-slate-600 text-sm"
+                                >
                                     Reject
                                 </button>
                             </div>

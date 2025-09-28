@@ -1,28 +1,73 @@
 'use client'
-import { storesDummyData } from "@/assets/assets"
 import StoreInfo from "@/components/admin/StoreInfo"
 import Loading from "@/components/Loading"
+import { useAuth, useUser } from "@clerk/nextjs"
+import axios from "axios"
 import { useEffect, useState } from "react"
 import toast from "react-hot-toast"
 
 export default function AdminStores() {
 
+    const { user } = useUser()
+    const { getToken } = useAuth()
+
     const [stores, setStores] = useState([])
     const [loading, setLoading] = useState(true)
+    const [updatingId, setUpdatingId] = useState(null) // id store yg sedang di-update
 
     const fetchStores = async () => {
-        setStores(storesDummyData)
-        setLoading(false)
+        setLoading(true)
+        try {
+            const token = await getToken()
+            if (!token) throw new Error('authentication failed')
+
+            const { data } = await axios.get('/api/admin/stores', {
+                headers: { Authorization: `Bearer ${token}` }
+            })
+
+            setStores(data?.stores ?? [])
+        } catch (error) {
+            console.error('fetchStores error:', error)
+            toast.error(error?.response?.data?.error || error.message || 'Failed to fetch stores')
+            setStores([])
+        } finally {
+            setLoading(false)
+        }
     }
 
     const toggleIsActive = async (storeId) => {
-        // Logic to toggle the status of a store
+        // fungsi ini mengembalikan Promise sehingga bisa dipakai dengan toast.promise
+        try {
+            setUpdatingId(storeId)
+            const token = await getToken()
+            if (!token) throw new Error('authentication failed')
 
+            // ===== Perbaikan utama: gunakan POST dan kirim body { storeId } =====
+            const { data } = await axios.post('/api/admin/toggle-store', { storeId }, {
+                headers: { Authorization: `Bearer ${token}` }
+            })
+
+            // refresh list setelah update
+            await fetchStores()
+
+            return data
+        } catch (error) {
+            console.error('toggleIsActive error:', error)
+            // rethrow supaya toast.promise menangkap error
+            throw error
+        } finally {
+            setUpdatingId(null)
+        }
     }
 
     useEffect(() => {
-        fetchStores()
-    }, [])
+        if (user) {
+            fetchStores()
+        } else {
+            setLoading(false)
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [user])
 
     return !loading ? (
         <div className="text-slate-500 mb-28">
@@ -39,7 +84,21 @@ export default function AdminStores() {
                             <div className="flex items-center gap-3 pt-2 flex-wrap">
                                 <p>Active</p>
                                 <label className="relative inline-flex items-center cursor-pointer text-gray-900">
-                                    <input type="checkbox" className="sr-only peer" onChange={() => toast.promise(toggleIsActive(store.id), { loading: "Updating data..." })} checked={store.isActive} />
+                                    <input
+                                        type="checkbox"
+                                        className="sr-only peer"
+                                        onChange={() => toast.promise(
+                                            toggleIsActive(store.id),
+                                            {
+                                                loading: 'Updating data...',
+                                                success: 'Store status updated',
+                                                error: 'Failed to update'
+                                            }
+                                        )}
+                                        checked={!!store.isActive}
+                                        // disable saat sedang update agar user tidak spam
+                                        disabled={updatingId === store.id}
+                                    />
                                     <div className="w-9 h-5 bg-slate-300 rounded-full peer peer-checked:bg-green-600 transition-colors duration-200"></div>
                                     <span className="dot absolute left-1 top-1 w-3 h-3 bg-white rounded-full transition-transform duration-200 ease-in-out peer-checked:translate-x-4"></span>
                                 </label>
