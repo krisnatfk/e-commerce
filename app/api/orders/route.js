@@ -92,7 +92,7 @@ export async function POST(request) {
     }
 
     if(paymentMethod === 'STRIPE'){
-        const stripe = Stripe(process.env.STRIPE_SECRET_KEY )
+        const stripe = Stripe(process.env.STRIPE_SECRET_KEY)
         const origin = await request.headers.get('origin')
 
         const session = await stripe.checkout.sessions.create({
@@ -114,7 +114,7 @@ export async function POST(request) {
             metadata: {
                 orderIds: orderIds.join(','),
                 userId,
-                appId: 'KrisMart'
+                appId: 'gocart'
             }
         })
         return NextResponse.json({session})
