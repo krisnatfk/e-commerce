@@ -108,6 +108,18 @@ export default function CreateStore() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [user])
 
+    // tambahkan setelah useEffect pertama
+useEffect(() => {
+    if (status === "approved") {
+        const timer = setTimeout(() => {
+            router.push("/store") // ganti sesuai route dashboard seller
+        }, 5000)
+
+        return () => clearTimeout(timer) // bersihkan timer kalau component unmount
+    }
+}, [status, router])
+
+
     if (!user) {
         return (
             <div>
