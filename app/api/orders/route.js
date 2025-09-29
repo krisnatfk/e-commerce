@@ -114,7 +114,7 @@ export async function POST(request) {
             metadata: {
                 orderIds: orderIds.join(','),
                 userId,
-                appId: 'MartKris'
+                appId: 'KrisMart'
             }
         })
         return NextResponse.json({session})
