@@ -13,7 +13,7 @@ export default function Dashboard() {
 
     const { getToken } = useAuth()
 
-    const currency = process.env.NEXT_PUBLIC_CURRENCY_SYMBOL || '$'
+    const currency = process.env.NEXT_PUBLIC_CURRENCY_SYMBOL || 'Rp '
 
     const router = useRouter()
 
@@ -42,7 +42,7 @@ export default function Dashboard() {
         } catch (error) {
             toast.error(error?.response?.data?.error || error.message)
         }
-            setLoading(false)
+        setLoading(false)
     }
 
     useEffect(() => {

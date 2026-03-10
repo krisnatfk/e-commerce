@@ -12,25 +12,24 @@ const Footer = () => {
 
     const linkSections = [
         {
-            title: "PRODUCTS",
+            title: "PRODUK",
             links: [
-                { text: "Earphones", path: '/', icon: null },
-                { text: "Headphones", path: '/', icon: null },
-                { text: "Smartphones", path: '/', icon: null },
-                { text: "Laptops", path: '/', icon: null },
+                { text: "Dada Fillet", path: '/', icon: null },
+                { text: "Paha Fillet", path: '/', icon: null },
+                { text: "Sayap / Pentungan", path: '/', icon: null },
+                { text: "Kulit Ayam", path: '/', icon: null },
             ]
         },
         {
-            title: "WEBSITE?",
+            title: "SITUS",
             links: [
-                { text: "Home", path: '/', icon: null },
-                { text: "Privacy Policy", path: '/', icon: null },
-                { text: "Become Plus Member", path: '/pricing', icon: null },
-                { text: "Create Your Store", path: '/create-store', icon: null },
+                { text: "Beranda", path: '/', icon: null },
+                { text: "Tentang", path: '/about', icon: null },
+                { text: "Kontak", path: '/contact', icon: null },
             ]
         },
         {
-            title: "CONTACT",
+            title: "KONTAK",
             links: [
                 { text: "+62858-7740-1876", path: '/', icon: MailIcon },
                 { text: "k1215na77@gmail.com", path: '/', icon: PhoneIcon },
@@ -54,7 +53,7 @@ const Footer = () => {
                         <Link href="/" className="text-4xl font-semibold text-slate-700">
                             <span className="text-green-600">Trimo</span>Joyo<span className="text-green-600 text-5xl leading-0">.</span>
                         </Link>
-                        <p className="max-w-[410px] mt-6 text-sm">Welcome to TrimoJoyo, your ultimate destination for the latest and smartest gadgets. From smartphones and smartwatches to essential accessories, we bring you the best in innovation — all in one place.</p>
+                        <p className="max-w-[410px] mt-6 text-sm">Selamat datang di TrimoJoyo, pemasok ayam fillet segar dan berkualitas pilihan Anda. Dari dada fillet hingga berbagai karkas potong, kami menghadirkan produk sehat, bersih, dan 100% halal khusus untuk kebutuhan dapur dan bisnis Anda.</p>
                         <div className="flex items-center gap-3 mt-5">
                             {socialIcons.map((item, i) => (
                                 <Link href={item.link} key={i} className="flex items-center justify-center w-10 h-10 bg-slate-100 hover:scale-105 hover:border border-slate-300 transition rounded-full">
@@ -80,7 +79,7 @@ const Footer = () => {
                     </div>
                 </div>
                 <p className="py-4 text-sm text-slate-500">
-                    Copyright 2025 © TrimoJoyo All Right Reserved.
+                    Hak Cipta 2025 © TrimoJoyo. Seluruh hak dilindungi.
                 </p>
             </div>
         </footer>

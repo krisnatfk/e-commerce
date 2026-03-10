@@ -10,8 +10,8 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function Cart() {
 
-    const currency = process.env.NEXT_PUBLIC_CURRENCY_SYMBOL || '$';
-    
+    const currency = process.env.NEXT_PUBLIC_CURRENCY_SYMBOL || 'Rp ';
+
     const { cartItems } = useSelector(state => state.cart);
     const products = useSelector(state => state.product.list);
 
@@ -51,17 +51,17 @@ export default function Cart() {
 
             <div className="max-w-7xl mx-auto ">
                 {/* Title */}
-                <PageTitle heading="My Cart" text="items in your cart" linkText="Add more" />
+                <PageTitle heading="Keranjang Saya" text="barang di keranjang" linkText="Tambah lagi" />
 
                 <div className="flex items-start justify-between gap-5 max-lg:flex-col">
 
                     <table className="w-full max-w-4xl text-slate-600 table-auto">
                         <thead>
                             <tr className="max-sm:text-sm">
-                                <th className="text-left">Product</th>
-                                <th>Quantity</th>
-                                <th>Total Price</th>
-                                <th className="max-md:hidden">Remove</th>
+                                <th className="text-left">Produk</th>
+                                <th>Jumlah</th>
+                                <th>Total Harga</th>
+                                <th className="max-md:hidden">Hapus</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -75,13 +75,13 @@ export default function Cart() {
                                             <div>
                                                 <p className="max-sm:text-sm">{item.name}</p>
                                                 <p className="text-xs text-slate-500">{item.category}</p>
-                                                <p>{currency}{item.price}</p>
+                                                <p>{currency}{item.price.toLocaleString('id-ID')}</p>
                                             </div>
                                         </td>
                                         <td className="text-center">
                                             <Counter productId={item.id} />
                                         </td>
-                                        <td className="text-center">{currency}{(item.price * item.quantity).toLocaleString()}</td>
+                                        <td className="text-center">{currency}{(item.price * item.quantity).toLocaleString('id-ID')}</td>
                                         <td className="text-center max-md:hidden">
                                             <button onClick={() => handleDeleteItemFromCart(item.id)} className=" text-red-500 hover:bg-red-50 p-2.5 rounded-full active:scale-95 transition-all">
                                                 <Trash2Icon size={18} />
@@ -98,7 +98,7 @@ export default function Cart() {
         </div>
     ) : (
         <div className="min-h-[80vh] mx-6 flex items-center justify-center text-slate-400">
-            <h1 className="text-2xl sm:text-4xl font-semibold">Your cart is empty</h1>
+            <h1 className="text-2xl sm:text-4xl font-semibold">Keranjang kamu kosong</h1>
         </div>
     )
 }

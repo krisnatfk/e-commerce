@@ -10,20 +10,20 @@ export async function POST(request) {
         const { userId } = getAuth(request)
         const storeId = await authSeller(userId)
         if (!storeId) {
-            return NextResponse.json({error: "not authorized"}, {status: 401})
+            return NextResponse.json({ error: "not authorized" }, { status: 401 })
         }
 
         // get the data from teh form
         const formData = await request.formData()
         const name = formData.get("name")
         const description = formData.get("description")
-        const mrp = Number(formData.get("mrp")) 
+        const mrp = Number(formData.get("mrp"))
         const price = Number(formData.get("price"))
         const category = formData.get("category")
         const images = formData.getAll("images")
 
         if (!name || !description || !mrp || !price || !category || images.length < 1) {
-        return NextResponse.json({error: "missing product details"}, {status: 401})
+            return NextResponse.json({ error: "missing product details" }, { status: 401 })
         }
 
         // upload images to imagekit
@@ -37,9 +37,9 @@ export async function POST(request) {
             const url = imagekit.url({
                 path: response.filePath,
                 transformation: [
-                    {quality: "auto"},
-                    {format: "webp"},
-                    {width: "1024"}
+                    { quality: "auto" },
+                    { format: "webp" },
+                    { width: "1024" }
                 ]
             })
             return url
@@ -57,11 +57,11 @@ export async function POST(request) {
             }
         })
 
-        return NextResponse.json({message: "product added successfully"})
+        return NextResponse.json({ message: "product added successfully" })
 
     } catch (error) {
         console.error(error);
-        return NextResponse.json({error: error.code || error.message}, {status: 400})
+        return NextResponse.json({ error: error.code || error.message }, { status: 400 })
     }
 }
 
@@ -71,15 +71,112 @@ export async function GET(request) {
         const { userId } = getAuth(request)
         const storeId = await authSeller(userId)
         if (!storeId) {
-            return NextResponse.json({error: "not authorized"}, {status: 401})
+            return NextResponse.json({ error: "not authorized" }, { status: 401 })
         }
         const products = await prisma.product.findMany({
-            where: {storeId}
+            where: { storeId }
         })
 
-        return NextResponse.json({products})
+        return NextResponse.json({ products })
     } catch (error) {
         console.error(error);
-        return NextResponse.json({error: error.code || error.message}, {status: 400})
+        return NextResponse.json({ error: error.code || error.message }, { status: 400 })
+    }
+}
+
+// edit product
+export async function PUT(request) {
+    try {
+        const { userId } = getAuth(request)
+        const storeId = await authSeller(userId)
+        if (!storeId) {
+            return NextResponse.json({ error: "not authorized" }, { status: 401 })
+        }
+
+        const { productId, name, description, mrp, price, category } = await request.json()
+
+        if (!productId) {
+            return NextResponse.json({ error: "missing productId" }, { status: 400 })
+        }
+
+        // Verify product belongs to this store
+        const product = await prisma.product.findFirst({
+            where: { id: productId, storeId }
+        })
+
+        if (!product) {
+            return NextResponse.json({ error: "product not found" }, { status: 404 })
+        }
+
+        // Build update data (only include fields that are provided)
+        const updateData = {}
+        if (name !== undefined) updateData.name = name
+        if (description !== undefined) updateData.description = description
+        if (mrp !== undefined) updateData.mrp = Number(mrp)
+        if (price !== undefined) updateData.price = Number(price)
+        if (category !== undefined) updateData.category = category
+
+        const updated = await prisma.product.update({
+            where: { id: productId },
+            data: updateData
+        })
+
+        return NextResponse.json({ message: "Produk berhasil diupdate", product: updated })
+    } catch (error) {
+        console.error(error);
+        return NextResponse.json({ error: error.code || error.message }, { status: 400 })
+    }
+}
+
+// delete product
+export async function DELETE(request) {
+    try {
+        const { userId } = getAuth(request)
+        const storeId = await authSeller(userId)
+        if (!storeId) {
+            return NextResponse.json({ error: "not authorized" }, { status: 401 })
+        }
+
+        const { searchParams } = new URL(request.url)
+        const productId = searchParams.get('productId')
+
+        if (!productId) {
+            return NextResponse.json({ error: "missing productId" }, { status: 400 })
+        }
+
+        // Verify product belongs to this store
+        const product = await prisma.product.findFirst({
+            where: { id: productId, storeId }
+        })
+
+        if (!product) {
+            return NextResponse.json({ error: "product not found" }, { status: 404 })
+        }
+
+        // Check if product has any orders
+        const orderItems = await prisma.orderItem.findMany({
+            where: { productId }
+        })
+
+        if (orderItems.length > 0) {
+            // Soft approach: just mark as out of stock instead of deleting
+            await prisma.product.update({
+                where: { id: productId },
+                data: { inStock: false }
+            })
+            return NextResponse.json({
+                message: "Produk memiliki pesanan terkait. Produk dinonaktifkan (tidak dihapus).",
+                softDeleted: true
+            })
+        }
+
+        await prisma.product.delete({
+            where: { id: productId }
+        })
+
+        return NextResponse.json({ message: "Produk berhasil dihapus" })
+    } catch (error) {
+        console.error(error);
+        return NextResponse.json({ error: error.code || error.message }, { status: 400 })
     }
 }

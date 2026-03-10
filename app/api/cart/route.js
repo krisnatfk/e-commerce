@@ -1,5 +1,6 @@
 // /app/api/cart/route.js
 import prisma from "@/lib/prisma";
+import { ensureUserExists } from "@/lib/ensureUser";
 import { getAuth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 
@@ -10,6 +11,9 @@ export async function POST(request) {
     if (!userId) {
       return NextResponse.json({ error: "not_authenticated" }, { status: 401 });
     }
+
+    // Ensure user exists in DB (auto-sync from Clerk)
+    await ensureUserExists(userId);
 
     const body = await request.json();
     const cart = body?.cart ?? {};
@@ -35,6 +39,9 @@ export async function GET(request) {
     if (!userId) {
       return NextResponse.json({ error: "not_authenticated" }, { status: 401 });
     }
+
+    // Ensure user exists in DB (auto-sync from Clerk)
+    await ensureUserExists(userId);
 
     const user = await prisma.user.findUnique({
       where: { id: userId },

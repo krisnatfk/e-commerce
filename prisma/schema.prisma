@@ -1,6 +1,5 @@
 generator client {
-    provider        = "prisma-client-js"
-    previewFeatures = ["driverAdapters"]
+    provider = "prisma-client-js"
 }
 
 datasource db {
@@ -49,28 +48,34 @@ enum OrderStatus {
     PROCESSING
     SHIPPED
     DELIVERED
+    CANCELLED
 }
 
 enum PaymentMethod {
     COD
     STRIPE
+    MIDTRANS
 }
 
 // Required for creating an Order: total, userId, storeId, addressId, isPaid, paymentMethod, isCouponUsed, coupon (JSON), orderItems (nested)
 model Order {
-    id            String        @id @default(cuid())
-    total         Float
-    status        OrderStatus   @default(ORDER_PLACED)
-    userId        String
-    storeId       String
-    addressId     String
-    isPaid        Boolean       @default(false)
-    paymentMethod PaymentMethod
-    createdAt     DateTime      @default(now())
-    updatedAt     DateTime      @updatedAt
-    isCouponUsed  Boolean       @default(false)
-    coupon        Json          @default("{}")
-    orderItems    OrderItem[]
+    id              String        @id @default(cuid())
+    total           Float
+    status          OrderStatus   @default(ORDER_PLACED)
+    userId          String
+    storeId         String
+    addressId       String
+    isPaid          Boolean       @default(false)
+    paymentMethod   PaymentMethod
+    shippingCost    Float         @default(0)
+    shippingCourier String        @default("")
+    trackingNumber  String        @default("")
+    cancelledAt     DateTime?
+    createdAt       DateTime      @default(now())
+    updatedAt       DateTime      @updatedAt
+    isCouponUsed    Boolean       @default(false)
+    coupon          Json          @default("{}")
+    orderItems      OrderItem[]
 
     // Relations
     user    User    @relation("BuyerRelation", fields: [userId], references: [id])
@@ -118,6 +123,7 @@ model Address {
     email     String
     street    String
     city      String
+    cityId    String   @default("")
     state     String
     zip       String
     country   String

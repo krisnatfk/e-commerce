@@ -1,8 +1,9 @@
 import prisma from "@/lib/prisma";
+import { ensureUserExists } from "@/lib/ensureUser";
 import { getAuth } from "@clerk/nextjs/server";
 import { PaymentMethod } from "@prisma/client";
 import { NextResponse } from "next/server";
-import Stripe from "stripe";
+import midtransClient from "midtrans-client";
 
 export async function POST(request) {
   try {
@@ -11,7 +12,10 @@ export async function POST(request) {
       return NextResponse.json({ error: "not authorized" }, { status: 401 });
     }
 
-    const { addressId, items, couponCode, paymentMethod } = await request.json();
+    // Ensure user exists in DB (auto-sync from Clerk)
+    await ensureUserExists(userId);
+
+    const { addressId, items, couponCode, paymentMethod, shippingCost, shippingCourier } = await request.json();
 
     if (!addressId || !paymentMethod || !items || !Array.isArray(items) || items.length === 0) {
       return NextResponse.json({ error: "missing order details" }, { status: 401 });
@@ -42,6 +46,9 @@ export async function POST(request) {
       }
     }
 
+    // Get user details for Midtrans
+    const userData = await prisma.user.findUnique({ where: { id: userId } });
+
     const orderByStore = new Map();
 
     for (const item of items) {
@@ -57,26 +64,34 @@ export async function POST(request) {
     let fullAmount = 0;
     let isShippingFeeAdded = false;
 
+    // Use the shipping cost from frontend (RajaOngkir) or default
+    const actualShippingCost = shippingCost || 0;
+    const actualShippingCourier = shippingCourier || "";
+
     for (const [storeId, sellerItems] of orderByStore.entries()) {
       let total = sellerItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
       if (couponCode) {
         total -= (total * coupon.discount) / 100;
       }
-      if (!isPlusMember && !isShippingFeeAdded) {
-        total += 5;
+
+      // Add shipping cost (only once, from RajaOngkir calculation)
+      if (!isPlusMember && !isShippingFeeAdded && actualShippingCost > 0) {
+        total += actualShippingCost;
         isShippingFeeAdded = true;
       }
 
-      fullAmount += parseFloat(total.toFixed(2));
+      fullAmount += total;
 
       const order = await prisma.order.create({
         data: {
           userId,
           storeId,
           addressId,
-          total: parseFloat(total.toFixed(2)),
+          total: total,
           paymentMethod,
+          shippingCost: !isShippingFeeAdded ? 0 : actualShippingCost,
+          shippingCourier: actualShippingCourier,
           isCouponUsed: coupon ? true : false,
           coupon: coupon ? coupon : {},
           orderItems: {
@@ -91,37 +106,61 @@ export async function POST(request) {
       orderIds.push(order.id);
     }
 
-    if(paymentMethod === 'STRIPE'){
-        const stripe = Stripe(process.env.STRIPE_SECRET_KEY)
-        const origin = await request.headers.get('origin')
+    // MIDTRANS PAYMENT INTEGRATION
+    if (paymentMethod === 'MIDTRANS') {
+      const snap = new midtransClient.Snap({
+        isProduction: false,
+        serverKey: process.env.MIDTRANS_SERVER_KEY,
+        clientKey: process.env.NEXT_PUBLIC_MIDTRANS_CLIENT_KEY
+      });
 
-        const session = await stripe.checkout.sessions.create({
-            payment_method_types: ['card'],
-            line_items: [{
-                price_data:{
-                    currency: 'usd',
-                    product_data:{
-                        name: 'Order'
-                    },
-                    unit_amount: Math.round(fullAmount * 100)
-                },
-                quantity: 1
-            }],
-            expires_at: Math.floor(Date.now() / 1000) + 30 * 60,     // current time + 30 minutes
-            mode: 'payment',
-            success_url: `${origin}/loading?nextUrl=orders`,
-            cancel_url: `${origin}/cart`,
-            metadata: {
-                orderIds: orderIds.join(','),
-                userId,
-                appId: 'gocart'
-            }
-        })
-        return NextResponse.json({session})
+      const parameter = {
+        "transaction_details": {
+          "order_id": `TRIMOJOYO-${Date.now()}-${orderIds[0].substring(0, 5)}`,
+          "gross_amount": Math.round(fullAmount)
+        },
+        "credit_card": {
+          "secure": true
+        },
+        "customer_details": {
+          "first_name": userData?.name || "Customer",
+          "email": userData?.email || "",
+        },
+        "item_details": items.map(item => ({
+          id: item.id,
+          price: Math.round(item.price),
+          quantity: item.quantity,
+          name: item.name?.substring(0, 50) || "Product"
+        })).concat(
+          actualShippingCost > 0 && !isPlusMember ? [{
+            id: "SHIPPING",
+            price: Math.round(actualShippingCost),
+            quantity: 1,
+            name: `Ongkir ${actualShippingCourier.toUpperCase()}`
+          }] : []
+        ).concat(
+          coupon ? [{
+            id: "DISCOUNT",
+            price: -Math.round(items.reduce((acc, item) => acc + item.price * item.quantity, 0) * coupon.discount / 100),
+            quantity: 1,
+            name: `Diskon ${coupon.code}`
+          }] : []
+        )
+      };
+
+      const transaction = await snap.createTransaction(parameter);
+
+      // Clear cart after creating Midtrans transaction
+      await prisma.user.update({
+        where: { id: userId },
+        data: { cart: {} },
+      });
+
+      return NextResponse.json({ token: transaction.token, redirect_url: transaction.redirect_url, orderIds });
     }
 
 
-    // clear cart
+    // clear cart for COD
     await prisma.user.update({
       where: { id: userId },
       data: { cart: {} },
@@ -137,14 +176,9 @@ export async function POST(request) {
 export async function GET(request) {
   try {
     const { userId } = getAuth(request);
+    // Return ALL orders (including unpaid MIDTRANS) so customer can see payment status
     const orders = await prisma.order.findMany({
-      where: {
-        userId,
-        OR: [
-          { paymentMethod: PaymentMethod.COD },
-          { AND: [{ paymentMethod: PaymentMethod.STRIPE }, { isPaid: true }] },
-        ],
-      },
+      where: { userId },
       include: {
         orderItems: { include: { product: true } },
         address: true,

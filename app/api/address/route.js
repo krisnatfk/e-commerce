@@ -1,4 +1,5 @@
 import prisma from "@/lib/prisma"
+import { ensureUserExists } from "@/lib/ensureUser"
 import { getAuth } from "@clerk/nextjs/server"
 import { NextResponse } from "next/server"
 
@@ -6,8 +7,16 @@ import { NextResponse } from "next/server"
 // add new address
 export async function POST(request) {
     try {
-        const {userId} = getAuth(request)
-        const {address} = await request.json()
+        const { userId } = getAuth(request)
+
+        if (!userId) {
+            return NextResponse.json({ error: "not authenticated" }, { status: 401 })
+        }
+
+        // Ensure user exists in DB (auto-sync from Clerk)
+        await ensureUserExists(userId)
+
+        const { address } = await request.json()
 
         address.userId = userId
 
@@ -15,26 +24,29 @@ export async function POST(request) {
             data: address
         })
 
-        return NextResponse.json({newAddress, message: 'Address added Successfully'})
+        return NextResponse.json({ newAddress, message: 'Address added Successfully' })
     } catch (error) {
         console.error(error)
-        return NextResponse.json({error: error.code || error.message}, {status: 400})
+        return NextResponse.json({ error: error.code || error.message }, { status: 400 })
     }
 }
 
 // Get All addresses for a user
 export async function GET(request) {
     try {
-        const {userId} = getAuth(request)
+        const { userId } = getAuth(request)
 
+        if (!userId) {
+            return NextResponse.json({ error: "not authenticated" }, { status: 401 })
+        }
 
         const addresses = await prisma.address.findMany({
-            where: {userId}
+            where: { userId }
         })
 
-        return NextResponse.json({addresses})
+        return NextResponse.json({ addresses })
     } catch (error) {
         console.error(error)
-        return NextResponse.json({error: error.code || error.message}, {status: 400})
+        return NextResponse.json({ error: error.code || error.message }, { status: 400 })
     }
 }

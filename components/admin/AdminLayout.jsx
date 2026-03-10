@@ -11,8 +11,8 @@ import axios from "axios"
 const AdminLayout = ({ children }) => {
 
 
-    const {user} = useUser()
-    const {getToken} = useAuth()
+    const { user } = useUser()
+    const { getToken } = useAuth()
 
     const [isAdmin, setIsAdmin] = useState(false)
     const [loading, setLoading] = useState(true)
@@ -20,13 +20,13 @@ const AdminLayout = ({ children }) => {
     const fetchIsAdmin = async () => {
         try {
             const token = await getToken()
-            const {data} = await axios.get('/api/admin/is-admin', {
+            const { data } = await axios.get('/api/admin/is-admin', {
                 headers: { Authorization: `Bearer ${token}` }
             })
             setIsAdmin(data.isAdmin)
         } catch (error) {
             console.error(error);
-        }finally {
+        } finally {
             setLoading(false)
         }
     }
@@ -51,9 +51,9 @@ const AdminLayout = ({ children }) => {
         </div>
     ) : (
         <div className="min-h-screen flex flex-col items-center justify-center text-center px-6">
-            <h1 className="text-2xl sm:text-4xl font-semibold text-slate-400">You are not authorized to access this page</h1>
+            <h1 className="text-2xl sm:text-4xl font-semibold text-slate-400">Kamu tidak memiliki akses ke halaman ini</h1>
             <Link href="/" className="bg-slate-700 text-white flex items-center gap-2 mt-8 p-2 px-6 max-sm:text-sm rounded-full">
-                Go to home <ArrowRightIcon size={18} />
+                Ke Beranda <ArrowRightIcon size={18} />
             </Link>
         </div>
     )
