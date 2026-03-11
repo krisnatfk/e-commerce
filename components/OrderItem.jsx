@@ -87,7 +87,7 @@ const OrderItem = ({ order }) => {
                 {/* Header: Order ID + Date */}
                 <div className="flex flex-wrap items-center justify-between gap-2 mb-3 pb-3 border-b border-slate-100">
                     <div className="flex items-center gap-2 text-xs text-slate-400">
-                        <span>Order #{order.id.slice(-8).toUpperCase()}</span>
+                        <span>Pesanan #{order.id.slice(-8).toUpperCase()}</span>
                         <span>•</span>
                         <span>{new Date(order.createdAt).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' })}</span>
                     </div>

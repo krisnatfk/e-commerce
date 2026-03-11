@@ -6,7 +6,7 @@ const OurSpecs = () => {
 
     return (
         <div className='px-6 my-20 max-w-6xl mx-auto'>
-            <Title visibleButton={false} title='Our Specifications' description="We offer top-tier service and convenience to ensure your shopping experience is smooth, secure and completely hassle-free." />
+            <Title visibleButton={false} title='Spesifikasi Kami' description="Kami menawarkan layanan dan kenyamanan tingkat atas untuk memastikan pengalaman belanja Anda lancar, aman, dan sepenuhnya bebas gangguan." />
 
             <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7 gap-y-10 mt-26'>
                 {

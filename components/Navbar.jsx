@@ -83,7 +83,7 @@ const Navbar = () => {
                                     <UserButton.Action labelIcon={<PackageIcon size={16} />} label="Pesanan Saya" onClick={() => router.push('/orders')} />
                                     <UserButton.Action labelIcon={<ShoppingCart size={16} />} label="Keranjang" onClick={() => router.push('/cart')} />
                                     {isAdmin && (
-                                        <UserButton.Action labelIcon={<LayoutDashboardIcon size={16} />} label="Admin Dashboard" onClick={() => router.push('/admin')} />
+                                        <UserButton.Action labelIcon={<LayoutDashboardIcon size={16} />} label="Dashboard Admin" onClick={() => router.push('/admin')} />
                                     )}
                                 </UserButton.MenuItems>
                             </UserButton>
@@ -109,7 +109,7 @@ const Navbar = () => {
                                     <UserButton.Action labelIcon={<PackageIcon size={16} />} label="Pesanan Saya" onClick={() => router.push('/orders')} />
                                     <UserButton.Action labelIcon={<ShoppingCart size={16} />} label="Keranjang" onClick={() => router.push('/cart')} />
                                     {isAdmin && (
-                                        <UserButton.Action labelIcon={<LayoutDashboardIcon size={16} />} label="Admin Dashboard" onClick={() => router.push('/admin')} />
+                                        <UserButton.Action labelIcon={<LayoutDashboardIcon size={16} />} label="Dashboard Admin" onClick={() => router.push('/admin')} />
                                     )}
                                 </UserButton.MenuItems>
                             </UserButton>
