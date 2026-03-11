@@ -1,0 +1,49 @@
+﻿   Γû▓ Next.js 15.5.12
+   - Environments: .env.local, .env
+
+   Creating an optimized production build ...
+node.exe : Failed to 
+compile.
+At C:\Program Files\nod
+ejs\npx.ps1:29 char:3
++   & $NODE_EXE 
+$NPX_CLI_JS $args
++   ~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~
+    + CategoryInfo     
+         : NotSpecifi  
+  ed: (Failed to com   
+ pile.:String) [],     
+RemoteException
+    + FullyQualifiedEr 
+   rorId : NativeComm  
+  andError
+ 
+
+./node_modules/recharts
+/es6/util/ReactUtils.js
+Module not found: 
+Can't resolve 
+'react-is'
+
+https://nextjs.org/docs
+/messages/module-not-fo
+und
+
+Import trace for 
+requested module:
+./node_modules/recharts
+/es6/cartesian/Area.js
+__barrel_optimize__?nam
+es=Area,AreaChart,Carte
+sianGrid,ResponsiveCont
+ainer,Tooltip,XAxis,YAx
+is!=!./node_modules/rec
+harts/es6/index.js
+./components/OrdersArea
+Chart.jsx
+./app/admin/page.jsx
+
+
+> Build failed because 
+of webpack errors

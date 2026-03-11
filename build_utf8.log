@@ -1,0 +1,952 @@
+﻿
+> e-commerce@0.1.0 build
+> prisma generate && next build
+
+node.exe : Environment 
+variables loaded from 
+.env
+At C:\Program Files\nod
+ejs\npm.ps1:29 char:3
++   & $NODE_EXE 
+$NPM_CLI_JS $args
++   ~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~
+    + CategoryInfo     
+         : NotSpecifi  
+  ed: (Environment v   
+ ariables loaded fr    
+om .env:String) []    
+, RemoteException
+    + FullyQualifiedEr 
+   rorId : NativeComm  
+  andError
+ 
+Prisma schema loaded from prisma\schema.prisma
+
+Γ£ö Generated Prisma Client (v6.16.2) to .\node_modules\@prisma\client in 207ms
+
+Start by importing your Prisma Client (See: https://pris.ly/d/importing-client)
+
+Tip: Want to turn off tips and other hints? https://pris.ly/tip-4-nohints
+
+Γû▓ Next.js 16.1.6 (Turbopack)
+- Environments: .env.local, .env
+
+ΓÜá The "middleware" 
+file convention is 
+deprecated. Please use 
+"proxy" instead. Learn 
+more: https://nextjs.or
+g/docs/messages/middlew
+are-to-proxy
+  Creating an optimized production build ...
+
+> Build error occurred
+Error: Turbopack build 
+failed with 7 errors:
+./node_modules/recharts
+/es6/util/ReactUtils.js
+:3:1
+Module not found: 
+Can't resolve 
+'react-is'
+[0m [90m 1 |[39m 
+[36mimport[39m 
+[36mget[39m 
+[36mfrom[39m [32m'es
+-toolkit/compat/get'[3
+9m[33m;[39m
+ [90m 2 |[39m 
+[36mimport[39m { [33
+mChildren[39m[33m,[3
+9m isValidElement } 
+[36mfrom[39m [32m're
+act'[39m[33m;[39m
+[31m[1m>[22m[39m[9
+0m 3 |[39m 
+[36mimport[39m { 
+isFragment } 
+[36mfrom[39m [32m're
+act-is'[39m[33m;[39m
+ [90m   |[39m [31m[
+1m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[2
+2m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[39
+m[31m[1m^[22m[39m[
+31m[1m^[22m[39m[31m
+[1m^[22m[39m[31m[1
+m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[22
+m[39m[31m[1m^[22m[
+39m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[3
+1m[1m^[22m[39m[31m
+[1m^[22m[39m[31m[1m
+^[22m[39m[31m[1m^[
+22m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[3
+9m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[31
+m[1m^[22m[39m[31m[
+1m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[2
+2m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[39
+m[31m[1m^[22m[39m[
+31m[1m^[22m[39m[31m
+[1m^[22m[39m[31m[1
+m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[22
+m[39m[31m[1m^[22m[
+39m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[3
+1m[1m^[22m[39m
+ [90m 4 |[39m 
+[36mimport[39m { 
+isNullish } 
+[36mfrom[39m [32m'./
+DataUtils'[39m[33m;[
+39m
+ [90m 5 |[39m 
+[36mimport[39m { [33
+mFilteredElementKeyMap
+[39m } [36mfrom[39m 
+[32m'./types'[39m[33m
+;[39m
+ [90m 6 |[39m 
+[36mimport[39m { 
+isEventKey } 
+[36mfrom[39m [32m'./
+excludeEventProps'[39m
+[33m;[39m[0m
+
+
+
+Import traces:
+  Client Component 
+Browser:
+    ./node_modules/rech
+arts/es6/util/ReactUtil
+s.js [Client Component 
+Browser]
+    ./node_modules/rech
+arts/es6/cartesian/Area
+.js [Client Component 
+Browser]
+    ./components/Orders
+AreaChart.jsx [Client 
+Component Browser]
+    
+./app/admin/page.jsx 
+[Client Component 
+Browser]
+    
+./app/admin/page.jsx 
+[Server Component]
+
+  Client Component SSR:
+    ./node_modules/rech
+arts/es6/util/ReactUtil
+s.js [Client Component 
+SSR]
+    ./node_modules/rech
+arts/es6/cartesian/Area
+.js [Client Component 
+SSR]
+    ./components/Orders
+AreaChart.jsx [Client 
+Component SSR]
+    
+./app/admin/page.jsx 
+[Client Component SSR]
+    
+./app/admin/page.jsx 
+[Server Component]
+
+https://nextjs.org/docs
+/messages/module-not-fo
+und
+
+
+./components/Navbar.jsx
+:7:1
+Export Protect doesn't 
+exist in target module
+[0m [90m  5 |[39m 
+[36mimport[39m { 
+useEffect[33m,[39m 
+useState } 
+[36mfrom[39m [32m"re
+act"[39m[33m;[39m
+ [90m  6 |[39m 
+[36mimport[39m { 
+useSelector } 
+[36mfrom[39m [32m"re
+act-redux"[39m[33m;[
+39m
+[31m[1m>[22m[39m[9
+0m  7 |[39m 
+[36mimport[39m { 
+useUser[33m,[39m 
+useClerk[33m,[39m [3
+3mUserButton[39m[33m,
+[39m [33mProtect[39m
+[33m,[39m useAuth } 
+[36mfrom[39m [32m"@c
+lerk/nextjs"[39m[33m;
+[39m
+ [90m    |[39m [31m
+[1m^[22m[39m[31m[1m
+^[22m[39m[31m[1m^[
+22m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[3
+9m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[31
+m[1m^[22m[39m[31m[
+1m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[2
+2m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[39
+m[31m[1m^[22m[39m[
+31m[1m^[22m[39m[31m
+[1m^[22m[39m[31m[1
+m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[22
+m[39m[31m[1m^[22m[
+39m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[3
+1m[1m^[22m[39m[31m
+[1m^[22m[39m[31m[1m
+^[22m[39m[31m[1m^[
+22m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[3
+9m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[31
+m[1m^[22m[39m[31m[
+1m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[2
+2m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[39
+m[31m[1m^[22m[39m[
+31m[1m^[22m[39m[31m
+[1m^[22m[39m[31m[1
+m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[22
+m[39m[31m[1m^[22m[
+39m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[3
+1m[1m^[22m[39m[31m
+[1m^[22m[39m[31m[1m
+^[22m[39m[31m[1m^[
+22m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[3
+9m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[31
+m[1m^[22m[39m[31m[
+1m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[2
+2m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[39
+m[31m[1m^[22m[39m[
+31m[1m^[22m[39m[31m
+[1m^[22m[39m[31m[1
+m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[22
+m[39m[31m[1m^[22m[
+39m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[3
+1m[1m^[22m[39m[31m
+[1m^[22m[39m[31m[1m
+^[22m[39m[31m[1m^[
+22m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[3
+9m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[31
+m[1m^[22m[39m[31m[
+1m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[2
+2m[39m
+ [90m  8 |[39m 
+[36mimport[39m axios 
+[36mfrom[39m [32m"ax
+ios"[39m[33m;[39m
+ [90m  9 |[39m
+ [90m 10 |[39m 
+[36mconst[39m 
+[33mNavbar[39m 
+[33m=[39m () 
+[33m=>[39m {[0m
+
+The export Protect was 
+not found in module [pr
+oject]/node_modules/@cl
+erk/nextjs/dist/esm/ind
+ex.js [app-client] 
+(ecmascript).
+Did you mean to import 
+RedirectToCreateOrganiz
+ation?
+All exports of the 
+module are statically 
+known (It doesn't have 
+dynamic exports). So 
+it's known statically 
+that the requested 
+export doesn't exist.
+
+Import traces:
+  Client Component 
+Browser:
+    ./components/Navbar
+.jsx [Client Component 
+Browser]
+    ./app/(public)/layo
+ut.jsx [Client 
+Component Browser]
+    ./app/(public)/layo
+ut.jsx [Server 
+Component]
+
+  Client Component SSR:
+    ./components/Navbar
+.jsx [Client Component 
+SSR]
+    ./app/(public)/layo
+ut.jsx [Client 
+Component SSR]
+    ./app/(public)/layo
+ut.jsx [Server 
+Component]
+
+
+./components/Navbar.jsx
+:7:1
+Export Protect doesn't 
+exist in target module
+[0m [90m  5 |[39m 
+[36mimport[39m { 
+useEffect[33m,[39m 
+useState } 
+[36mfrom[39m [32m"re
+act"[39m[33m;[39m
+ [90m  6 |[39m 
+[36mimport[39m { 
+useSelector } 
+[36mfrom[39m [32m"re
+act-redux"[39m[33m;[
+39m
+[31m[1m>[22m[39m[9
+0m  7 |[39m 
+[36mimport[39m { 
+useUser[33m,[39m 
+useClerk[33m,[39m [3
+3mUserButton[39m[33m,
+[39m [33mProtect[39m
+[33m,[39m useAuth } 
+[36mfrom[39m [32m"@c
+lerk/nextjs"[39m[33m;
+[39m
+ [90m    |[39m [31m
+[1m^[22m[39m[31m[1m
+^[22m[39m[31m[1m^[
+22m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[3
+9m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[31
+m[1m^[22m[39m[31m[
+1m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[2
+2m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[39
+m[31m[1m^[22m[39m[
+31m[1m^[22m[39m[31m
+[1m^[22m[39m[31m[1
+m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[22
+m[39m[31m[1m^[22m[
+39m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[3
+1m[1m^[22m[39m[31m
+[1m^[22m[39m[31m[1m
+^[22m[39m[31m[1m^[
+22m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[3
+9m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[31
+m[1m^[22m[39m[31m[
+1m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[2
+2m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[39
+m[31m[1m^[22m[39m[
+31m[1m^[22m[39m[31m
+[1m^[22m[39m[31m[1
+m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[22
+m[39m[31m[1m^[22m[
+39m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[3
+1m[1m^[22m[39m[31m
+[1m^[22m[39m[31m[1m
+^[22m[39m[31m[1m^[
+22m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[3
+9m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[31
+m[1m^[22m[39m[31m[
+1m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[2
+2m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[39
+m[31m[1m^[22m[39m[
+31m[1m^[22m[39m[31m
+[1m^[22m[39m[31m[1
+m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[22
+m[39m[31m[1m^[22m[
+39m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[3
+1m[1m^[22m[39m[31m
+[1m^[22m[39m[31m[1m
+^[22m[39m[31m[1m^[
+22m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[3
+9m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[31
+m[1m^[22m[39m[31m[
+1m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[2
+2m[39m
+ [90m  8 |[39m 
+[36mimport[39m axios 
+[36mfrom[39m [32m"ax
+ios"[39m[33m;[39m
+ [90m  9 |[39m
+ [90m 10 |[39m 
+[36mconst[39m 
+[33mNavbar[39m 
+[33m=[39m () 
+[33m=>[39m {[0m
+
+The export Protect was 
+not found in module [pr
+oject]/node_modules/@cl
+erk/nextjs/dist/esm/ind
+ex.js [app-ssr] 
+(ecmascript).
+Did you mean to import 
+RedirectToCreateOrganiz
+ation?
+All exports of the 
+module are statically 
+known (It doesn't have 
+dynamic exports). So 
+it's known statically 
+that the requested 
+export doesn't exist.
+
+Import traces:
+  Client Component 
+Browser:
+    ./components/Navbar
+.jsx [Client Component 
+Browser]
+    ./app/(public)/layo
+ut.jsx [Client 
+Component Browser]
+    ./app/(public)/layo
+ut.jsx [Server 
+Component]
+
+  Client Component SSR:
+    ./components/Navbar
+.jsx [Client Component 
+SSR]
+    ./app/(public)/layo
+ut.jsx [Client 
+Component SSR]
+    ./app/(public)/layo
+ut.jsx [Server 
+Component]
+
+
+./components/OrderSumma
+ry.jsx:7:1
+Export Protect doesn't 
+exist in target module
+[0m [90m  5 |[39m 
+[36mimport[39m toast 
+[36mfrom[39m [32m're
+act-hot-toast'[39m[33
+m;[39m
+ [90m  6 |[39m 
+[36mimport[39m { 
+useRouter } 
+[36mfrom[39m [32m'ne
+xt/navigation'[39m[33
+m;[39m
+[31m[1m>[22m[39m[9
+0m  7 |[39m 
+[36mimport[39m { [33
+mProtect[39m[33m,[39
+m useAuth[33m,[39m 
+useUser } 
+[36mfrom[39m [32m'@c
+lerk/nextjs'[39m[33m;
+[39m
+ [90m    |[39m [31m
+[1m^[22m[39m[31m[1m
+^[22m[39m[31m[1m^[
+22m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[3
+9m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[31
+m[1m^[22m[39m[31m[
+1m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[2
+2m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[39
+m[31m[1m^[22m[39m[
+31m[1m^[22m[39m[31m
+[1m^[22m[39m[31m[1
+m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[22
+m[39m[31m[1m^[22m[
+39m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[3
+1m[1m^[22m[39m[31m
+[1m^[22m[39m[31m[1m
+^[22m[39m[31m[1m^[
+22m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[3
+9m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[31
+m[1m^[22m[39m[31m[
+1m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[2
+2m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[39
+m[31m[1m^[22m[39m[
+31m[1m^[22m[39m[31m
+[1m^[22m[39m[31m[1
+m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[22
+m[39m[31m[1m^[22m[
+39m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[3
+1m[1m^[22m[39m[31m
+[1m^[22m[39m[31m[1m
+^[22m[39m[31m[1m^[
+22m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[3
+9m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[31
+m[1m^[22m[39m[31m[
+1m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[2
+2m[39m[31m[1m^[22m
+[39m
+ [90m  8 |[39m 
+[36mimport[39m axios 
+[36mfrom[39m [32m'ax
+ios'[39m[33m;[39m
+ [90m  9 |[39m 
+[36mimport[39m { 
+fetchCart } 
+[36mfrom[39m [32m'@/
+lib/features/cart/cartS
+lice'[39m[33m;[39m
+ [90m 10 |[39m[0m
+
+The export Protect was 
+not found in module [pr
+oject]/node_modules/@cl
+erk/nextjs/dist/esm/ind
+ex.js [app-client] 
+(ecmascript).
+Did you mean to import 
+RedirectToCreateOrganiz
+ation?
+All exports of the 
+module are statically 
+known (It doesn't have 
+dynamic exports). So 
+it's known statically 
+that the requested 
+export doesn't exist.
+
+Import traces:
+  Client Component 
+Browser:
+    ./components/OrderS
+ummary.jsx [Client 
+Component Browser]
+    ./app/(public)/cart
+/page.jsx [Client 
+Component Browser]
+    ./app/(public)/cart
+/page.jsx [Server 
+Component]
+
+  Client Component SSR:
+    ./components/OrderS
+ummary.jsx [Client 
+Component SSR]
+    ./app/(public)/cart
+/page.jsx [Client 
+Component SSR]
+    ./app/(public)/cart
+/page.jsx [Server 
+Component]
+
+
+./components/OrderSumma
+ry.jsx:7:1
+Export Protect doesn't 
+exist in target module
+[0m [90m  5 |[39m 
+[36mimport[39m toast 
+[36mfrom[39m [32m're
+act-hot-toast'[39m[33
+m;[39m
+ [90m  6 |[39m 
+[36mimport[39m { 
+useRouter } 
+[36mfrom[39m [32m'ne
+xt/navigation'[39m[33
+m;[39m
+[31m[1m>[22m[39m[9
+0m  7 |[39m 
+[36mimport[39m { [33
+mProtect[39m[33m,[39
+m useAuth[33m,[39m 
+useUser } 
+[36mfrom[39m [32m'@c
+lerk/nextjs'[39m[33m;
+[39m
+ [90m    |[39m [31m
+[1m^[22m[39m[31m[1m
+^[22m[39m[31m[1m^[
+22m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[3
+9m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[31
+m[1m^[22m[39m[31m[
+1m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[2
+2m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[39
+m[31m[1m^[22m[39m[
+31m[1m^[22m[39m[31m
+[1m^[22m[39m[31m[1
+m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[22
+m[39m[31m[1m^[22m[
+39m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[3
+1m[1m^[22m[39m[31m
+[1m^[22m[39m[31m[1m
+^[22m[39m[31m[1m^[
+22m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[3
+9m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[31
+m[1m^[22m[39m[31m[
+1m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[2
+2m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[39
+m[31m[1m^[22m[39m[
+31m[1m^[22m[39m[31m
+[1m^[22m[39m[31m[1
+m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[22
+m[39m[31m[1m^[22m[
+39m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[3
+1m[1m^[22m[39m[31m
+[1m^[22m[39m[31m[1m
+^[22m[39m[31m[1m^[
+22m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[3
+9m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[31
+m[1m^[22m[39m[31m[
+1m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[2
+2m[39m[31m[1m^[22m
+[39m
+ [90m  8 |[39m 
+[36mimport[39m axios 
+[36mfrom[39m [32m'ax
+ios'[39m[33m;[39m
+ [90m  9 |[39m 
+[36mimport[39m { 
+fetchCart } 
+[36mfrom[39m [32m'@/
+lib/features/cart/cartS
+lice'[39m[33m;[39m
+ [90m 10 |[39m[0m
+
+The export Protect was 
+not found in module [pr
+oject]/node_modules/@cl
+erk/nextjs/dist/esm/ind
+ex.js [app-ssr] 
+(ecmascript).
+Did you mean to import 
+RedirectToCreateOrganiz
+ation?
+All exports of the 
+module are statically 
+known (It doesn't have 
+dynamic exports). So 
+it's known statically 
+that the requested 
+export doesn't exist.
+
+Import traces:
+  Client Component 
+Browser:
+    ./components/OrderS
+ummary.jsx [Client 
+Component Browser]
+    ./app/(public)/cart
+/page.jsx [Client 
+Component Browser]
+    ./app/(public)/cart
+/page.jsx [Server 
+Component]
+
+  Client Component SSR:
+    ./components/OrderS
+ummary.jsx [Client 
+Component SSR]
+    ./app/(public)/cart
+/page.jsx [Client 
+Component SSR]
+    ./app/(public)/cart
+/page.jsx [Server 
+Component]
+
+
+./app/admin/layout.jsx:
+2:1
+Export SignedIn 
+doesn't exist in 
+target module
+[0m [90m 1 |[39m 
+[36mimport[39m 
+[33mAdminLayout[39m 
+[36mfrom[39m [32m"@/
+components/admin/AdminL
+ayout"[39m[33m;[39m
+[31m[1m>[22m[39m[9
+0m 2 |[39m 
+[36mimport[39m { [33
+mSignedIn[39m[33m,[3
+9m [33mSignedOut[39m
+[33m,[39m 
+[33mSignIn[39m } 
+[36mfrom[39m [32m"@c
+lerk/nextjs"[39m[33m;
+[39m
+ [90m   |[39m [31m[
+1m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[2
+2m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[39
+m[31m[1m^[22m[39m[
+31m[1m^[22m[39m[31m
+[1m^[22m[39m[31m[1
+m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[22
+m[39m[31m[1m^[22m[
+39m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[3
+1m[1m^[22m[39m[31m
+[1m^[22m[39m[31m[1m
+^[22m[39m[31m[1m^[
+22m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[3
+9m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[31
+m[1m^[22m[39m[31m[
+1m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[2
+2m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[39
+m[31m[1m^[22m[39m[
+31m[1m^[22m[39m[31m
+[1m^[22m[39m[31m[1
+m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[22
+m[39m[31m[1m^[22m[
+39m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[3
+1m[1m^[22m[39m[31m
+[1m^[22m[39m[31m[1m
+^[22m[39m[31m[1m^[
+22m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[3
+9m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[31
+m[1m^[22m[39m[31m[
+1m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[2
+2m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[39
+m[31m[1m^[22m[39m[
+31m[1m^[22m[39m[31m
+[1m^[22m[39m[31m[1
+m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[22
+m[39m[31m[1m^[22m[
+39m[31m[1m^[22m[39m
+[31m[1m^[22m[39m
+ [90m 3 |[39m
+ [90m 4 |[39m 
+[36mexport[39m 
+[36mconst[39m 
+metadata [33m=[39m {
+ [90m 5 |[39m     
+title[33m:[39m 
+[32m"TrimoJoyo - Admin
+"[39m[33m,[39m[0m
+
+The export SignedIn 
+was not found in 
+module [project]/node_m
+odules/@clerk/nextjs/di
+st/esm/index.js 
+[app-rsc] (ecmascript).
+Did you mean to import 
+SignIn?
+All exports of the 
+module are statically 
+known (It doesn't have 
+dynamic exports). So 
+it's known statically 
+that the requested 
+export doesn't exist.
+
+
+./app/admin/layout.jsx:
+2:1
+Export SignedOut 
+doesn't exist in 
+target module
+[0m [90m 1 |[39m 
+[36mimport[39m 
+[33mAdminLayout[39m 
+[36mfrom[39m [32m"@/
+components/admin/AdminL
+ayout"[39m[33m;[39m
+[31m[1m>[22m[39m[9
+0m 2 |[39m 
+[36mimport[39m { [33
+mSignedIn[39m[33m,[3
+9m [33mSignedOut[39m
+[33m,[39m 
+[33mSignIn[39m } 
+[36mfrom[39m [32m"@c
+lerk/nextjs"[39m[33m;
+[39m
+ [90m   |[39m [31m[
+1m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[2
+2m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[39
+m[31m[1m^[22m[39m[
+31m[1m^[22m[39m[31m
+[1m^[22m[39m[31m[1
+m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[22
+m[39m[31m[1m^[22m[
+39m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[3
+1m[1m^[22m[39m[31m
+[1m^[22m[39m[31m[1m
+^[22m[39m[31m[1m^[
+22m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[3
+9m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[31
+m[1m^[22m[39m[31m[
+1m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[2
+2m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[39
+m[31m[1m^[22m[39m[
+31m[1m^[22m[39m[31m
+[1m^[22m[39m[31m[1
+m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[22
+m[39m[31m[1m^[22m[
+39m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[3
+1m[1m^[22m[39m[31m
+[1m^[22m[39m[31m[1m
+^[22m[39m[31m[1m^[
+22m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[3
+9m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[31
+m[1m^[22m[39m[31m[
+1m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[2
+2m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[39
+m[31m[1m^[22m[39m[
+31m[1m^[22m[39m[31m
+[1m^[22m[39m[31m[1
+m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[22
+m[39m[31m[1m^[22m[
+39m[31m[1m^[22m[39m
+[31m[1m^[22m[39m
+ [90m 3 |[39m
+ [90m 4 |[39m 
+[36mexport[39m 
+[36mconst[39m 
+metadata [33m=[39m {
+ [90m 5 |[39m     
+title[33m:[39m 
+[32m"TrimoJoyo - Admin
+"[39m[33m,[39m[0m
+
+The export SignedOut 
+was not found in 
+module [project]/node_m
+odules/@clerk/nextjs/di
+st/esm/index.js 
+[app-rsc] (ecmascript).
+Did you mean to import 
+SignOutButton?
+All exports of the 
+module are statically 
+known (It doesn't have 
+dynamic exports). So 
+it's known statically 
+that the requested 
+export doesn't exist.
+
+
+    at <unknown> (https
+://nextjs.org/docs/mess
+ages/module-not-found)
+    at <unknown> (./com
+ponents/Navbar.jsx:7:1)
+    at <unknown> (./com
+ponents/Navbar.jsx:7:1)
+    at <unknown> (./com
+ponents/OrderSummary.js
+x:7:1)
+    at <unknown> (./com
+ponents/OrderSummary.js
+x:7:1)
+    at <unknown> (./app
+/admin/layout.jsx:2:1)
+    at <unknown> (./app
+/admin/layout.jsx:2:1)
